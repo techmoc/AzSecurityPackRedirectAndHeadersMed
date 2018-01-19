@@ -1,19 +1,21 @@
 # Azure App Service Security Pack - Medium Strength
 
-The purpose of this extension is to create a one-stop shop for common basic security concerns when using Azure Web Apps. 
+Based from Toby Meyer's [SecurityPackHttpsRedirectPlusHeadersMed](https://www.siteextensions.net/packages/SecurityPackHttpsRedirectPlusHeadersMed/)
+
+The purpose of this extension is to create a one-stop shop for common basic security concerns when using Azure Web Apps.
 
 
 ## Basics
 
-It is considered best practice when using Azure Web Apps or IIS to specify proper security headers and strip unnecessary headers. In addition, HTTPS everywhere is preferable while allowing Azure always-on to continue to work using keepalive requests. 
+It is considered best practice when using Azure Web Apps or IIS to specify proper security headers and strip unnecessary headers. In addition, HTTPS everywhere is preferable while allowing Azure always-on to continue to work using keepalive requests.
 
 To accomplish this goal without installing several extensions per site along with custom applicationhost transforms, this extension was created to attempt to address many scenarios.
 
-This version of the extension is "medium strength". Reasons for that classification are in the details below.  
+This version of the extension is "medium strength". Reasons for that classification are in the details below.
 
 ## Details
 
-This extension implements the following changes to your Azure Web App: 
+This extension implements the following changes to your Azure Web App:
 
 * **HTTP to HTTPS Redirection with Keepalive Support**: This will redirect incoming non-TLS enabled requests on port 80 to port 443 using a 301 permanent redirect response which will negotiate TLS with the client. This implementation contains an exception for keepalive requests, both as identified as a warmup request by the server and user agent headers from the client containing initialization, sitewarmup, and always-on identifiers. This should account for most scenarios. [All the info](https://tools.ietf.org/html/rfc5246)
 
@@ -25,11 +27,11 @@ This extension implements the following changes to your Azure Web App:
 
 ## Installation
 
-Install like any other Azure site extension by using the Azure portal (app service->extensions->add). In addition, you can install extensions with ARM templates as well. Here is an example of an this extension installed as a resource of a parent site named by the parameter "mysite", which also contains an appsettings stanza: 
+Install like any other Azure site extension by using the Azure portal (app service->extensions->add). In addition, you can install extensions with ARM templates as well. Here is an example of an this extension installed as a resource of a parent site named by the parameter "mysite", which also contains an appsettings stanza:
 
         {
           "apiVersion": "2015-08-01",
-          "name": "SecurityPackHttpsRedirectPlusHeadersMed",
+          "name": "SecurityPackHttpsRedirectPlusHeadersMedCustomTransactive",
           "type": "siteextensions",
           "dependsOn": [
             "[resourceId('Microsoft.Web/Sites', parameters('mysite'))]",
@@ -37,12 +39,12 @@ Install like any other Azure site extension by using the Azure portal (app servi
           ]
         },
 
-ARM Install Note: In my experience it's more reliable to set dependencies to force installation after all other parts of the app service are complete. In addition, the siteextensions.net site will timeout if too many extensions are requested in a short period of time. To address this in templates containing many sites, you can set dependsOn stanzas to reference extensions in a previously listed site to force synchronous processing. 
+ARM Install Note: In my experience it's more reliable to set dependencies to force installation after all other parts of the app service are complete. In addition, the siteextensions.net site will timeout if too many extensions are requested in a short period of time. To address this in templates containing many sites, you can set dependsOn stanzas to reference extensions in a previously listed site to force synchronous processing.
 
 ## Testing
 
-After installing and restarting your site, you can test by inspecting the redirect, keepalive, and headers. To simplify the test process, tools such as [securityheaders.io](https://securityheaders.io/) can be used. As of this writing (August 2017) the changes made by this transform result in a security "grade" of "A" as reported on the aforementioned site. **Please note** that some sites **will** experience problems after installing this extension. Depending on your security needs it may be worth your time to update the security practices of your site, but if not simply delete this extension if issues are encountered. 
+After installing and restarting your site, you can test by inspecting the redirect, keepalive, and headers. To simplify the test process, tools such as [securityheaders.io](https://securityheaders.io/) can be used. As of this writing (August 2017) the changes made by this transform result in a security "grade" of "A" as reported on the aforementioned site. **Please note** that some sites **will** experience problems after installing this extension. Depending on your security needs it may be worth your time to update the security practices of your site, but if not simply delete this extension if issues are encountered.
 
-## Feedback 
+## Feedback
 
 Please feel free to open issues, etc. as you see fit. Thank you!
