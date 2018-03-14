@@ -3,7 +3,7 @@
   <metadata>
     <id>SecurityPackHttpsRedirectPlusHeadersMedCustomTransactive</id>
     <title>Custom Security Settings: HTTPS Redirect w/KeepAlive Support, Headers incl HSTS, CSP, and More. "Medium strength".</title>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Transactive</authors>
     <licenseUrl>https://raw.githubusercontent.com/trasactiveltd/AzSecurityPackRedirectAndHeadersMed/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/transactiveltd/AzSecurityPackRedirectAndHeadersMed</projectUrl>
